@@ -12,9 +12,33 @@ class RickMortyRepositoryImpl extends RickMortyRepository {
   RickMortyRepositoryImpl(this._remoteSource, this._localSource);
 
   @override
-  Future<CharacterResponse> getCharacters() => _remoteSource.getCharacters();
+  Future<CharacterResponse> getCharacters() async {
+    var response = await _remoteSource.getCharacters();
+    await _localSource.insertChapterResults(response.results);
+    return response;
+  }
+
+  @override
+  Future<List<ChapterResults>> getChapterResultsLocal() =>
+      _localSource.getChapterResults();
+
+  @override
+  Future<ChapterResults> getChapterResultByIdLocal(int id) async {
+    try {
+      var result = await _localSource.getChapterById(id);
+      if (result == null) throw Exception('item not found');
+      return result;
+    } catch (e) {
+      print('error: $e');
+      throw Exception(e.toString());
+    }
+  }
 }
 
 abstract class RickMortyRepository {
   Future<CharacterResponse> getCharacters();
+
+  Future<List<ChapterResults>> getChapterResultsLocal();
+
+  Future<ChapterResults> getChapterResultByIdLocal(int id);
 }

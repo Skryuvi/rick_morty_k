@@ -3,15 +3,20 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:rick_morty/core/build_context_ext.dart';
+import 'package:rick_morty/domain/preferences_controller.dart';
 import 'package:rick_morty/features/page_characters/page_two.dart';
 import 'package:rick_morty/presentation/widgets/buttons/base_text_button.dart';
+import 'package:rick_morty/provider/db/db_provider.dart';
 
 import 'di/di_config.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
+  await getIt<PreferencesController>().init();
+  await getIt<DatabaseProvider>().init();
   runApp(const MyApp());
 }
 
@@ -20,7 +25,6 @@ final naivigatorKey = GlobalKey<NavigatorState>();
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

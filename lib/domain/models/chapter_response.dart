@@ -1,3 +1,4 @@
+import 'package:floor/floor.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'chapter_response.g.dart';
@@ -23,50 +24,57 @@ class ChapterInfo {
   ChapterInfo(
       {required this.count,
       required this.pages,
-      required this.next, this.prev});
+      required this.next,
+      this.prev});
 
   factory ChapterInfo.fromJson(Map<String, dynamic> json) =>
       _$ChapterInfoFromJson(json);
 }
 
 @JsonSerializable()
+@entity
 class ChapterResults {
+  @primaryKey
   final int id;
-  final String name;
-  final String status;
-  final String species;
-  final String type;
-  final String gender;
-  final Origin origin;
-  final Location location;
-  final String image;
-  final List<String> episode;
-  final String url;
-  final String created;
+  final String? name;
+  final String? status;
+  final String? species;
+  final String? type;
+  final String? gender;
+  @ignore
+  final Origin? origin;
+  @ignore
+  final Location? location;
+  final String? image;
+  @ignore
+  final List<String>? episode;
+  final String? url;
+  final String? created;
 
   ChapterResults(
       {required this.id,
-      required this.name,
-      required this.status,
-      required this.species,
-      required this.type,
-      required this.gender,
-      required this.origin,
-      required this.location,
-      required this.image,
-      required this.episode,
-      required this.url,
-      required this.created});
+      this.name,
+      this.status,
+      this.species,
+      this.type,
+      this.gender,
+      this.origin,
+      this.location,
+      this.image,
+      this.episode,
+      this.url,
+      this.created});
 
   factory ChapterResults.fromJson(Map<String, dynamic> json) =>
       _$ChapterResultsFromJson(json);
 }
 
 @JsonSerializable()
+
 class Origin {
+
   final String name;
   final String url;
-
   Origin({required this.name, required this.url});
 
   factory Origin.fromJson(Map<String, dynamic> json) => _$OriginFromJson(json);

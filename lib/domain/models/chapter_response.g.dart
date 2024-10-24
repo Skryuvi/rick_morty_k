@@ -38,18 +38,22 @@ Map<String, dynamic> _$ChapterInfoToJson(ChapterInfo instance) =>
 ChapterResults _$ChapterResultsFromJson(Map<String, dynamic> json) =>
     ChapterResults(
       id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-      status: json['status'] as String,
-      species: json['species'] as String,
-      type: json['type'] as String,
-      gender: json['gender'] as String,
-      origin: Origin.fromJson(json['origin'] as Map<String, dynamic>),
-      location: Location.fromJson(json['location'] as Map<String, dynamic>),
-      image: json['image'] as String,
+      name: json['name'] as String?,
+      status: json['status'] as String?,
+      species: json['species'] as String?,
+      type: json['type'] as String?,
+      gender: json['gender'] as String?,
+      origin: json['origin'] == null
+          ? null
+          : Origin.fromJson(json['origin'] as Map<String, dynamic>),
+      location: json['location'] == null
+          ? null
+          : Location.fromJson(json['location'] as Map<String, dynamic>),
+      image: json['image'] as String?,
       episode:
-          (json['episode'] as List<dynamic>).map((e) => e as String).toList(),
-      url: json['url'] as String,
-      created: json['created'] as String,
+          (json['episode'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      url: json['url'] as String?,
+      created: json['created'] as String?,
     );
 
 Map<String, dynamic> _$ChapterResultsToJson(ChapterResults instance) =>
